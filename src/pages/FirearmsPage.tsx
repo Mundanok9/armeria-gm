@@ -138,6 +138,7 @@ export const FirearmsPage: React.FC<FirearmsPageProps> = ({
               <option value="ESPINGARDA">Espingardas</option>
               <option value="CARABINA">Carabinas</option>
               <option value="SUBMETRALHADORA">Submetralhadoras</option>
+              <option value="FUZIL">Fuzis</option>
               <option value="OUTRO">Outros</option>
             </select>
           </div>

@@ -155,6 +155,7 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
                 <option value="ESPINGARDA">Espingarda</option>
                 <option value="CARABINA">Carabina</option>
                 <option value="SUBMETRALHADORA">Submetralhadora</option>
+                <option value="FUZIL">Fuzil</option>
                 <option value="OUTRO">Outro</option>
               </select>
             </div>

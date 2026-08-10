@@ -20,6 +20,7 @@ export type TipoArmamento =
   | 'ESPINGARDA' 
   | 'CARABINA' 
   | 'SUBMETRALHADORA' 
+  | 'FUZIL'
   | 'OUTRO';
 
 export type SituacaoArmamento = 
