@@ -28,13 +28,15 @@ interface EmManutencaoPageProps {
   onOpenManutencaoModal: (firearm: Firearm) => void;
   onOpenAgendamentoModal: (firearm?: Firearm) => void;
   initialSubTab?: 'bancada' | 'pecas' | 'todos';
+  refreshKey?: number;
 }
 
 export const EmManutencaoPage: React.FC<EmManutencaoPageProps> = ({
   onViewFirearmDetails,
   onOpenManutencaoModal,
   onOpenAgendamentoModal,
-  initialSubTab = 'todos'
+  initialSubTab = 'todos',
+  refreshKey
 }) => {
   const { user } = useAuth();
   const [firearms, setFirearms] = useState<Firearm[]>([]);
@@ -51,8 +53,14 @@ export const EmManutencaoPage: React.FC<EmManutencaoPageProps> = ({
   const canManage = user?.role === 'ADMIN' || user?.role === 'ARMEIRO';
 
   useEffect(() => {
+    if (initialSubTab) {
+      setActiveSubTab(initialSubTab);
+    }
+  }, [initialSubTab]);
+
+  useEffect(() => {
     loadData();
-  }, []);
+  }, [refreshKey]);
 
   const loadData = async () => {
     setLoading(true);

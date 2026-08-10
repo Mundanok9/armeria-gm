@@ -13,6 +13,7 @@ interface FirearmsPageProps {
   onOpenNewModal: () => void;
   onEditFirearm: (firearm: Firearm) => void;
   initialFilters?: { search?: string; tipo?: string; situacao?: string; condicao?: string; atrasadas?: boolean };
+  refreshKey?: number;
 }
 
 export const FirearmsPage: React.FC<FirearmsPageProps> = ({
@@ -21,7 +22,8 @@ export const FirearmsPage: React.FC<FirearmsPageProps> = ({
   onOpenAgendamento,
   onOpenNewModal,
   onEditFirearm,
-  initialFilters
+  initialFilters,
+  refreshKey
 }) => {
   const { user } = useAuth();
   const [firearms, setFirearms] = useState<Firearm[]>([]);
@@ -42,7 +44,7 @@ export const FirearmsPage: React.FC<FirearmsPageProps> = ({
 
   useEffect(() => {
     loadFirearms();
-  }, [search, selectedTipo, selectedSituacao, selectedCondicao, filterAtrasadas]);
+  }, [search, selectedTipo, selectedSituacao, selectedCondicao, filterAtrasadas, refreshKey]);
 
   const loadFirearms = async () => {
     setLoading(true);

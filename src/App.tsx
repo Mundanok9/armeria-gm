@@ -40,6 +40,8 @@ const AppContent: React.FC = () => {
   const [userToEdit, setUserToEdit] = useState<User | null>(null);
 
   const [firearmFilters, setFirearmFilters] = useState<any>({});
+  const [refreshKey, setRefreshKey] = useState(0);
+  const triggerRefresh = () => setRefreshKey(prev => prev + 1);
 
   if (isLoading) {
     return (
@@ -91,6 +93,7 @@ const AppContent: React.FC = () => {
     } else {
       await ApiService.createFirearm(firearmData);
     }
+    triggerRefresh();
     if (selectedFirearmId) {
       setSelectedFirearmId(selectedFirearmId);
     }
@@ -98,6 +101,7 @@ const AppContent: React.FC = () => {
 
   const handleDeleteFirearm = async (id: string) => {
     await ApiService.deleteFirearm(id);
+    triggerRefresh();
     if (selectedFirearmId === id) {
       setSelectedFirearmId(null);
     }
@@ -158,6 +162,7 @@ const AppContent: React.FC = () => {
             onBack={() => setSelectedFirearmId(null)}
             onOpenManutencao={handleOpenManutencao}
             onEdit={handleOpenEditFirearm}
+            refreshKey={refreshKey}
           />
         ) : (
           <>
@@ -165,6 +170,7 @@ const AppContent: React.FC = () => {
               <DashboardPage
                 onNavigate={handleNavigate}
                 onOpenNewFirearm={handleOpenNewFirearm}
+                refreshKey={refreshKey}
               />
             )}
 
@@ -176,6 +182,7 @@ const AppContent: React.FC = () => {
                 onOpenNewModal={handleOpenNewFirearm}
                 onEditFirearm={handleOpenEditFirearm}
                 initialFilters={firearmFilters}
+                refreshKey={refreshKey}
               />
             )}
 
@@ -185,6 +192,7 @@ const AppContent: React.FC = () => {
                 onOpenManutencaoModal={handleOpenManutencao}
                 onOpenAgendamentoModal={(firearm) => handleOpenNewAgendamento(firearm)}
                 initialSubTab={activeTab === 'pecas' ? 'pecas' : 'bancada'}
+                refreshKey={refreshKey}
               />
             )}
 
@@ -196,6 +204,7 @@ const AppContent: React.FC = () => {
                 onOpenEditAgendamentoModal={handleOpenEditAgendamento}
                 onNavigateToPecas={(search) => handleNavigate('em_manutencao', { search })}
                 initialFilters={firearmFilters}
+                refreshKey={refreshKey}
               />
             )}
 
@@ -203,11 +212,12 @@ const AppContent: React.FC = () => {
               <UsersPage
                 onOpenNewUser={handleOpenNewUser}
                 onEditUser={handleOpenEditUser}
+                refreshKey={refreshKey}
               />
             )}
 
             {activeTab === 'logs' && (user?.role === 'ADMIN' || user?.role === 'ARMEIRO') && (
-              <AuditLogsPage />
+              <AuditLogsPage refreshKey={refreshKey} />
             )}
           </>
         )}
@@ -227,6 +237,7 @@ const AppContent: React.FC = () => {
         onClose={() => setIsManutencaoModalOpen(false)}
         firearm={manutencaoFirearm}
         onSuccess={() => {
+          triggerRefresh();
           if (selectedFirearmId) setSelectedFirearmId(selectedFirearmId);
         }}
       />
@@ -237,7 +248,7 @@ const AppContent: React.FC = () => {
         agendamentoToEdit={agendamentoToEdit}
         preselectedFirearm={preselectedAgendamentoFirearm}
         onSuccess={() => {
-          // Reset or refresh handled inside page
+          triggerRefresh();
         }}
       />
 
@@ -245,7 +256,9 @@ const AppContent: React.FC = () => {
         isOpen={isUserModalOpen}
         onClose={() => setIsUserModalOpen(false)}
         userToEdit={userToEdit}
-        onSuccess={() => {}}
+        onSuccess={() => {
+          triggerRefresh();
+        }}
       />
 
       {/* Footer */}

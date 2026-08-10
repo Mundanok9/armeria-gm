@@ -32,6 +32,7 @@ interface AgendamentosPageProps {
   onOpenEditAgendamentoModal: (agendamento: AgendamentoManutencao) => void;
   onNavigateToPecas?: (search?: string) => void;
   initialFilters?: { status?: string; tipo?: string; search?: string };
+  refreshKey?: number;
 }
 
 export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
@@ -40,7 +41,8 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
   onOpenNewAgendamentoModal,
   onOpenEditAgendamentoModal,
   onNavigateToPecas,
-  initialFilters
+  initialFilters,
+  refreshKey
 }) => {
   const { user } = useAuth();
   const [agendamentos, setAgendamentos] = useState<AgendamentoManutencao[]>([]);
@@ -77,7 +79,7 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
 
   useEffect(() => {
     loadData();
-  }, [search, selectedStatus, selectedTipo, selectedPrioridade]);
+  }, [search, selectedStatus, selectedTipo, selectedPrioridade, refreshKey]);
 
   const loadData = async () => {
     setLoading(true);

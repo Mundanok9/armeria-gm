@@ -3,14 +3,18 @@ import { AuditLog } from '../types/index';
 import { ApiService } from '../services/api';
 import { FileText, Search, ShieldCheck } from 'lucide-react';
 
-export const AuditLogsPage: React.FC = () => {
+interface AuditLogsPageProps {
+  refreshKey?: number;
+}
+
+export const AuditLogsPage: React.FC<AuditLogsPageProps> = ({ refreshKey }) => {
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
     loadLogs();
-  }, []);
+  }, [refreshKey]);
 
   const loadLogs = async () => {
     setLoading(true);

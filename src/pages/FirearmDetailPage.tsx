@@ -24,13 +24,15 @@ interface FirearmDetailPageProps {
   onBack: () => void;
   onOpenManutencao: (firearm: Firearm) => void;
   onEdit: (firearm: Firearm) => void;
+  refreshKey?: number;
 }
 
 export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
   firearmId,
   onBack,
   onOpenManutencao,
-  onEdit
+  onEdit,
+  refreshKey
 }) => {
   const { user } = useAuth();
   const [firearm, setFirearm] = useState<Firearm | null>(null);
@@ -38,7 +40,7 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
 
   useEffect(() => {
     loadFirearm();
-  }, [firearmId]);
+  }, [firearmId, refreshKey]);
 
   const loadFirearm = async () => {
     setLoading(true);

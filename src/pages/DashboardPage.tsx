@@ -8,9 +8,10 @@ import { Shield, CheckCircle2, Wrench, Package, Users, Plus, FileText, Search, A
 interface DashboardPageProps {
   onNavigate: (tab: any, params?: any) => void;
   onOpenNewFirearm: () => void;
+  refreshKey?: number;
 }
 
-export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onOpenNewFirearm }) => {
+export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onOpenNewFirearm, refreshKey }) => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentFirearms, setRecentFirearms] = useState<Firearm[]>([]);
   const [recentLogs, setRecentLogs] = useState<AuditLog[]>([]);
@@ -19,7 +20,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onOpen
 
   useEffect(() => {
     loadDashboardData();
-  }, []);
+  }, [refreshKey]);
 
   const loadDashboardData = async () => {
     setLoading(true);

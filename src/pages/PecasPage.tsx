@@ -7,9 +7,10 @@ import { useAuth } from '../context/AuthContext';
 
 interface PecasPageProps {
   onViewFirearmDetails?: (firearmId: string) => void;
+  refreshKey?: number;
 }
 
-export const PecasPage: React.FC<PecasPageProps> = ({ onViewFirearmDetails }) => {
+export const PecasPage: React.FC<PecasPageProps> = ({ onViewFirearmDetails, refreshKey }) => {
   const { user } = useAuth();
   const [pecas, setPecas] = useState<PecaReparo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ export const PecasPage: React.FC<PecasPageProps> = ({ onViewFirearmDetails }) =>
 
   useEffect(() => {
     loadPecas();
-  }, [selectedStatus]);
+  }, [selectedStatus, search, refreshKey]);
 
   const loadPecas = async () => {
     setLoading(true);

@@ -6,16 +6,17 @@ import { Users, UserPlus, Edit3, Trash2, Search, ShieldCheck } from 'lucide-reac
 interface UsersPageProps {
   onOpenNewUser: () => void;
   onEditUser: (user: User) => void;
+  refreshKey?: number;
 }
 
-export const UsersPage: React.FC<UsersPageProps> = ({ onOpenNewUser, onEditUser }) => {
+export const UsersPage: React.FC<UsersPageProps> = ({ onOpenNewUser, onEditUser, refreshKey }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [refreshKey]);
 
   const loadUsers = async () => {
     setLoading(true);
