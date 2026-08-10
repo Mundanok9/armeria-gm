@@ -68,7 +68,9 @@ export const UserModal: React.FC<UserModalProps> = ({
     setLoading(true);
     try {
       if (userToEdit) {
-        await ApiService.updateUser(userToEdit.id, formData);
+        const payload: any = { ...formData };
+        if (!payload.password) delete payload.password;
+        await ApiService.updateUser(userToEdit.id, payload);
       } else {
         await ApiService.createUser(formData);
       }
@@ -117,11 +119,10 @@ export const UserModal: React.FC<UserModalProps> = ({
               <input
                 type="text"
                 required
-                disabled={!!userToEdit}
                 value={formData.matricula}
                 onChange={(e) => setFormData({ ...formData, matricula: e.target.value })}
                 placeholder="Ex: GM-104"
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm disabled:opacity-60"
+                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm"
               />
             </div>
 

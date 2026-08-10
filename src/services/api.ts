@@ -1090,7 +1090,12 @@ export class ApiService {
   public static async updateUser(id: string, userData: any): Promise<User> {
     await ensureDbSeeded();
     const docRef = doc(db, 'users', id);
-    await updateDoc(docRef, userData);
+    const updatePayload = { ...userData };
+    if (!updatePayload.password) {
+      delete updatePayload.password;
+    }
+    await updateDoc(docRef, updatePayload);
+    await this.addLog('EDICAO_USUARIO', `Usuário ${updatePayload.nome || id} (Matrícula: ${updatePayload.matricula || ''}) atualizado no sistema.`);
     const snap = await getDoc(docRef);
     return snap.data() as User;
   }
