@@ -122,12 +122,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onOpen
           className="bg-slate-800/90 hover:bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-md transition cursor-pointer"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Acervo</span>
-            <div className="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+            <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider">Total Acervo</span>
+            <div className="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center">
               <Shield className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-white">{stats?.totalArmas || 0}</p>
+          <p className="text-2xl font-black text-blue-300">{stats?.totalArmas || 0}</p>
           <p className="text-[10px] text-slate-400 mt-1">Armamentos ativos</p>
         </div>
 
@@ -152,12 +152,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate, onOpen
           className="bg-slate-800/90 hover:bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-md transition cursor-pointer"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-sky-400 uppercase tracking-wider">Agendamentos</span>
-            <div className="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+            <span className="text-[11px] font-bold text-yellow-400 uppercase tracking-wider">Agendamentos</span>
+            <div className="w-7 h-7 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center">
               <CalendarClock className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-sky-300">{stats?.agendamentosPendentes || 0}</p>
+          <p className="text-2xl font-black text-yellow-300">{stats?.agendamentosPendentes || 0}</p>
           <p className="text-[10px] text-slate-400 mt-1">Manutenções agendadas</p>
         </div>
 
