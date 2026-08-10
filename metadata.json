@@ -1,0 +1,6 @@
+{
+  "name": "Armeria GM",
+  "description": "Sistema profissional de gerenciamento de armamentos, cautelas e manutenções para Guarda Municipal com suporte a controle de usuários, QR code e relatórios.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

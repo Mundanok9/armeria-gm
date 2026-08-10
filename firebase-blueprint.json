@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "firearms": {
+      "title": "Firearms",
+      "description": "Armamentos cadastrados no sistema da Guarda Municipal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "n_serie": { "type": "string" },
+        "n_patrimonio": { "type": "string" },
+        "tipo": { "type": "string" },
+        "marca": { "type": "string" },
+        "modelo": { "type": "string" },
+        "calibre": { "type": "string" },
+        "capacidade": { "type": "number" },
+        "acabamento": { "type": "string" },
+        "comprimento_cano": { "type": "string" },
+        "situacao": { "type": "string" },
+        "condicao": { "type": "string" },
+        "localizacao": { "type": "string" },
+        "observacoes": { "type": "string" },
+        "ultima_manutencao": { "type": "string" },
+        "proxima_manutencao": { "type": "string" },
+        "historico_manutencao": { "type": "array" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["n_serie", "tipo", "marca", "modelo", "situacao", "condicao"]
+    },
+    "users": {
+      "title": "Users",
+      "description": "Usuários e operadores do sistema da Armeria",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "matricula": { "type": "string" },
+        "nome": { "type": "string" },
+        "cpf": { "type": "string" },
+        "email": { "type": "string" },
+        "cargo": { "type": "string" },
+        "role": { "type": "string" },
+        "status": { "type": "string" },
+        "telefone": { "type": "string" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["matricula", "nome", "role", "status"]
+    },
+    "pecas": {
+      "title": "Pecas",
+      "description": "Solicitações de peças de reposição para manutenção",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "firearm_id": { "type": "string" },
+        "firearm_serie": { "type": "string" },
+        "firearm_modelo": { "type": "string" },
+        "manutencao_id": { "type": "string" },
+        "nome_peca": { "type": "string" },
+        "quantidade": { "type": "number" },
+        "descricao": { "type": "string" },
+        "data_solicitacao": { "type": "string" },
+        "status": { "type": "string" },
+        "responsavel": { "type": "string" }
+      },
+      "required": ["firearm_id", "nome_peca", "quantidade", "status"]
+    },
+    "agendamentos": {
+      "title": "Agendamentos",
+      "description": "Agendamentos de manutenções preventivas e corretivas",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "firearm_id": { "type": "string" },
+        "firearm_serie": { "type": "string" },
+        "firearm_modelo": { "type": "string" },
+        "firearm_tipo": { "type": "string" },
+        "tipo": { "type": "string" },
+        "data_agendada": { "type": "string" },
+        "horario": { "type": "string" },
+        "motivo_observacao": { "type": "string" },
+        "status": { "type": "string" },
+        "prioridade": { "type": "string" },
+        "responsavel": { "type": "string" },
+        "concluido_em": { "type": "string" },
+        "resultado_descricao": { "type": "string" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["firearm_id", "tipo", "data_agendada", "status"]
+    },
+    "logs": {
+      "title": "Audit Logs",
+      "description": "Registros de auditoria do sistema",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "user_id": { "type": "string" },
+        "user_nome": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["timestamp", "action", "details"]
+    }
+  }
+}
