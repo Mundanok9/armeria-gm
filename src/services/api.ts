@@ -1083,6 +1083,13 @@ export class ApiService {
     return snap.data() as User;
   }
 
+  public static async deleteUser(id: string): Promise<{ success: boolean }> {
+    await ensureDbSeeded();
+    await deleteDoc(doc(db, 'users', id));
+    await this.addLog('EXCLUSAO_USUARIO', `Usuário ID ${id} excluído do sistema.`);
+    return { success: true };
+  }
+
   // SYSTEM STATS & AUDIT LOGS
   public static async getStats(): Promise<DashboardStats> {
     await ensureDbSeeded();

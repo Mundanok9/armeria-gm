@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, UserRole, UserStatus } from '../types/index';
 import { ApiService } from '../services/api';
-import { X, UserPlus, Save } from 'lucide-react';
+import { X, UserPlus, Save, Trash2 } from 'lucide-react';
 
 interface UserModalProps {
   isOpen: boolean;
@@ -211,22 +211,51 @@ export const UserModal: React.FC<UserModalProps> = ({
             />
           </div>
 
-          <div className="pt-4 flex items-center justify-end space-x-3 border-t border-slate-800">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800 text-sm font-semibold transition"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex items-center space-x-2 bg-sky-600 hover:bg-sky-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-sky-600/30 transition cursor-pointer disabled:opacity-50"
-            >
-              <Save className="w-4 h-4" />
-              <span>{loading ? 'Salvando...' : 'Salvar Usuário'}</span>
-            </button>
+          <div className="pt-4 flex items-center justify-between border-t border-slate-800">
+            <div>
+              {userToEdit && (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (confirm(`Tem certeza que deseja EXCLUIR o usuário ${userToEdit.nome} (${userToEdit.matricula})? Esta ação é irreversível.`)) {
+                      setLoading(true);
+                      try {
+                        await ApiService.deleteUser(userToEdit.id);
+                        onSuccess();
+                        onClose();
+                      } catch (err: any) {
+                        setError(err.message || 'Erro ao excluir usuário');
+                      } finally {
+                        setLoading(false);
+                      }
+                    }
+                  }}
+                  disabled={loading}
+                  className="flex items-center space-x-1.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>Excluir Usuário</span>
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800 text-sm font-semibold transition cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex items-center space-x-2 bg-sky-600 hover:bg-sky-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-sky-600/30 transition cursor-pointer disabled:opacity-50"
+              >
+                <Save className="w-4 h-4" />
+                <span>{loading ? 'Salvando...' : 'Salvar Usuário'}</span>
+              </button>
+            </div>
           </div>
         </form>
       </div>

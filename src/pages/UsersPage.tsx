@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User } from '../types/index';
 import { ApiService } from '../services/api';
-import { Users, UserPlus, Edit3, Search, ShieldCheck } from 'lucide-react';
+import { Users, UserPlus, Edit3, Trash2, Search, ShieldCheck } from 'lucide-react';
 
 interface UsersPageProps {
   onOpenNewUser: () => void;
@@ -26,6 +26,17 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onOpenNewUser, onEditUser 
       console.error('Error loading users:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteUser = async (user: User) => {
+    if (confirm(`Tem certeza que deseja EXCLUIR o usuário ${user.nome} (Matrícula: ${user.matricula})? Esta ação é irreversível.`)) {
+      try {
+        await ApiService.deleteUser(user.id);
+        await loadUsers();
+      } catch (err: any) {
+        alert(err.message || 'Erro ao excluir usuário');
+      }
     }
   };
 
@@ -118,13 +129,20 @@ export const UsersPage: React.FC<UsersPageProps> = ({ onOpenNewUser, onEditUser 
                         {u.status}
                       </span>
                     </td>
-                    <td className="p-4 text-right">
+                    <td className="p-4 text-right flex items-center justify-end space-x-2">
                       <button
                         onClick={() => onEditUser(u)}
                         className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg border border-slate-700 transition cursor-pointer"
                         title="Editar Usuário"
                       >
                         <Edit3 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDeleteUser(u)}
+                        className="p-2 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-lg transition cursor-pointer"
+                        title="Excluir Usuário"
+                      >
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </td>
                   </tr>
