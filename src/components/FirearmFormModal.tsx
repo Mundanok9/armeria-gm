@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Firearm, TipoArmamento, SituacaoArmamento, CondicaoArmamento } from '../types/index';
-import { X, Save, Shield, Trash2 } from 'lucide-react';
+import { X, Save, Shield } from 'lucide-react';
 
 interface FirearmFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (firearmData: Partial<Firearm>) => Promise<void>;
-  onDelete?: (id: string) => Promise<void>;
   initialData?: Firearm | null;
 }
 
@@ -14,7 +13,6 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
   isOpen,
   onClose,
   onSave,
-  onDelete,
   initialData
 }) => {
   const [formData, setFormData] = useState<Partial<Firearm>>({
@@ -298,50 +296,22 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
           </div>
 
           {/* Actions */}
-          <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-            <div>
-              {initialData && onDelete && (
-                <button
-                  type="button"
-                  onClick={async () => {
-                    if (confirm(`Tem certeza que deseja EXCLUIR o armamento Série ${initialData.n_serie}? Esta ação é irreversível.`)) {
-                      setIsSubmitting(true);
-                      try {
-                        await onDelete(initialData.id);
-                        onClose();
-                      } catch (err: any) {
-                        setError(err.message || 'Erro ao excluir armamento');
-                      } finally {
-                        setIsSubmitting(false);
-                      }
-                    }
-                  }}
-                  disabled={isSubmitting}
-                  className="flex items-center space-x-1.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer disabled:opacity-50"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span>Excluir Armamento</span>
-                </button>
-              )}
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 text-sm font-semibold transition cursor-pointer"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex items-center space-x-2 bg-sky-600 hover:bg-sky-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-sky-600/30 transition cursor-pointer disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                <span>{isSubmitting ? 'Salvando...' : 'Salvar Armamento'}</span>
-              </button>
-            </div>
+          <div className="pt-4 border-t border-slate-800 flex items-center justify-end space-x-3">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-5 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 text-sm font-semibold transition cursor-pointer"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex items-center space-x-2 bg-sky-600 hover:bg-sky-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-sky-600/30 transition cursor-pointer disabled:opacity-50"
+            >
+              <Save className="w-4 h-4" />
+              <span>{isSubmitting ? 'Salvando...' : 'Salvar Armamento'}</span>
+            </button>
           </div>
         </form>
       </div>

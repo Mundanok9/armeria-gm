@@ -96,13 +96,6 @@ const AppContent: React.FC = () => {
     }
   };
 
-  const handleDeleteFirearm = async (id: string) => {
-    await ApiService.deleteFirearm(id);
-    if (selectedFirearmId === id) {
-      setSelectedFirearmId(null);
-    }
-  };
-
   const handleOpenManutencao = (firearm: Firearm) => {
     setManutencaoFirearm(firearm);
     setIsManutencaoModalOpen(true);
@@ -218,7 +211,6 @@ const AppContent: React.FC = () => {
         isOpen={isFirearmModalOpen}
         onClose={() => setIsFirearmModalOpen(false)}
         onSave={handleSaveFirearm}
-        onDelete={handleDeleteFirearm}
         initialData={firearmToEdit}
       />
 

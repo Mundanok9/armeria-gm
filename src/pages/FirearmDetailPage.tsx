@@ -52,18 +52,6 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
     }
   };
 
-  const handleDelete = async () => {
-    if (!firearm) return;
-    if (confirm(`Tem certeza que deseja EXCLUIR o armamento Série ${firearm.n_serie}? Esta ação é irreversível.`)) {
-      try {
-        await ApiService.deleteFirearm(firearm.id);
-        onBack();
-      } catch (err: any) {
-        alert(err.message || 'Erro ao excluir armamento');
-      }
-    }
-  };
-
   if (loading) {
     return <div className="p-12 text-center text-slate-400 font-semibold">Carregando Ficha da Arma...</div>;
   }
@@ -138,17 +126,6 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
             >
               <FileText className="w-4 h-4 text-amber-400" />
               <span>Editar</span>
-            </button>
-          )}
-
-          {canManage && (
-            <button
-              onClick={handleDelete}
-              className="flex items-center space-x-1.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 text-xs font-bold py-2.5 px-3.5 rounded-xl transition cursor-pointer"
-              title="Excluir Armamento"
-            >
-              <Trash2 className="w-4 h-4" />
-              <span>Excluir</span>
             </button>
           )}
         </div>

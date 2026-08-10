@@ -62,15 +62,6 @@ export const FirearmsPage: React.FC<FirearmsPageProps> = ({
     }
   };
 
-  const handleDeleteFirearm = async (firearm: Firearm) => {
-    try {
-      await ApiService.deleteFirearm(firearm.id);
-      await loadFirearms();
-    } catch (err: any) {
-      alert(err.message || 'Erro ao excluir armamento');
-    }
-  };
-
   const handleExportPDF = () => {
     PdfService.generateRelatorioArmasPDF(firearms, `RELATÓRIO DE ARMAMENTOS (Filtro: ${selectedSituacao})`);
   };
@@ -218,7 +209,6 @@ export const FirearmsPage: React.FC<FirearmsPageProps> = ({
               onOpenManutencao={onOpenManutencao}
               onOpenAgendamento={onOpenAgendamento}
               onEdit={onEditFirearm}
-              onDelete={handleDeleteFirearm}
               userRole={user?.role}
             />
           ))}

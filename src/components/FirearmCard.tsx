@@ -1,7 +1,7 @@
 import React from 'react';
 import { Firearm } from '../types/index';
 import { StatusChip } from './StatusChip';
-import { Shield, Wrench, FileText, MapPin, AlertTriangle, Calendar, Clock, CalendarClock, Trash2 } from 'lucide-react';
+import { Shield, Wrench, FileText, MapPin, AlertTriangle, Calendar, Clock, CalendarClock } from 'lucide-react';
 
 interface FirearmCardProps {
   firearm: Firearm;
@@ -9,7 +9,6 @@ interface FirearmCardProps {
   onOpenManutencao: (firearm: Firearm) => void;
   onOpenAgendamento?: (firearm: Firearm) => void;
   onEdit?: (firearm: Firearm) => void;
-  onDelete?: (firearm: Firearm) => void;
   userRole?: string;
 }
 
@@ -19,7 +18,6 @@ export const FirearmCard: React.FC<FirearmCardProps> = ({
   onOpenManutencao,
   onOpenAgendamento,
   onEdit,
-  onDelete,
   userRole
 }) => {
   const canManage = userRole === 'ADMIN' || userRole === 'ARMEIRO';
@@ -160,20 +158,6 @@ export const FirearmCard: React.FC<FirearmCardProps> = ({
             title="Editar Ficha"
           >
             <Shield className="w-4 h-4 text-slate-400" />
-          </button>
-        )}
-
-        {canManage && onDelete && (
-          <button
-            onClick={() => {
-              if (confirm(`Tem certeza que deseja EXCLUIR o armamento Série ${firearm.n_serie}?`)) {
-                onDelete(firearm);
-              }
-            }}
-            className="p-2.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 text-xs font-semibold rounded-xl transition cursor-pointer"
-            title="Excluir Armamento"
-          >
-            <Trash2 className="w-4 h-4" />
           </button>
         )}
       </div>
