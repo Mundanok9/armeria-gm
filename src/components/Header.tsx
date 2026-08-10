@@ -68,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigateToOverdue }) => {
               <span>ARMERIA GM</span>
               <span className="inline-flex items-center space-x-1 bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-500/30">
                 <Cloud className="w-3 h-3 text-emerald-400" />
-                <span>Firebase Cloud</span>
+                <span>Nuvem</span>
               </span>
             </h1>
             <p className="text-xs text-slate-400 font-medium">Guarda Municipal — Controle de Armamento</p>
