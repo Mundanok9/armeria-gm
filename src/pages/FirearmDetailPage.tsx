@@ -141,13 +141,14 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
             </button>
           )}
 
-          {user?.role === 'ADMIN' && (
+          {canManage && (
             <button
               onClick={handleDelete}
-              className="p-2.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded-xl transition cursor-pointer"
+              className="flex items-center space-x-1.5 bg-rose-600/10 hover:bg-rose-600/20 text-rose-400 border border-rose-500/30 text-xs font-bold py-2.5 px-3.5 rounded-xl transition cursor-pointer"
               title="Excluir Armamento"
             >
               <Trash2 className="w-4 h-4" />
+              <span>Excluir</span>
             </button>
           )}
         </div>

@@ -566,10 +566,44 @@ export class ApiService {
   }
 
   public static async deleteFirearm(id: string): Promise<{ success: boolean }> {
-    await ensureDbSeeded();
-    await deleteDoc(doc(db, 'firearms', id));
-    await this.addLog('EXCLUSAO_ARMAMENTO', `Armamento ID ${id} removido do Firebase.`);
-    return { success: true };
+    try {
+      await ensureDbSeeded();
+      let n_serie = '';
+      try {
+        const firearm = await this.getFirearm(id);
+        if (firearm) {
+          n_serie = firearm.n_serie;
+          // Deletar agendamentos vinculados por ID ou Série
+          const qAgd1 = query(collection(db, 'agendamentos'), where('firearm_id', '==', id));
+          const agdSnap1 = await getDocs(qAgd1);
+          for (const d of agdSnap1.docs) {
+            await deleteDoc(doc(db, 'agendamentos', d.id));
+          }
+          if (n_serie) {
+            const qAgd2 = query(collection(db, 'agendamentos'), where('firearm_serie', '==', n_serie));
+            const agdSnap2 = await getDocs(qAgd2);
+            for (const d of agdSnap2.docs) {
+              await deleteDoc(doc(db, 'agendamentos', d.id));
+            }
+            // Deletar peças vinculadas por série
+            const qPecas = query(collection(db, 'pecas'), where('firearm_serie', '==', n_serie));
+            const pecasSnap = await getDocs(qPecas);
+            for (const d of pecasSnap.docs) {
+              await deleteDoc(doc(db, 'pecas', d.id));
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Aviso ao consultar armamento antes da exclusão:', err);
+      }
+
+      await deleteDoc(doc(db, 'firearms', id));
+      await this.addLog('EXCLUSAO_ARMAMENTO', `Armamento ID ${id} ${n_serie ? `(Série ${n_serie})` : ''} excluído do sistema.`);
+      return { success: true };
+    } catch (error: any) {
+      console.error('Erro ao excluir armamento:', error);
+      throw new Error(`Erro ao excluir o armamento: ${error.message || error}`);
+    }
   }
 
   public static async addManutencao(
