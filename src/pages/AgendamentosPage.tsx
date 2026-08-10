@@ -52,6 +52,7 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
   const [selectedStatus, setSelectedStatus] = useState<StatusAgendamento | 'TODOS'>((initialFilters?.status as any) || 'AGENDADO');
   const [selectedTipo, setSelectedTipo] = useState<TipoManutencao | 'TODOS'>((initialFilters?.tipo as any) || 'TODOS');
   const [selectedPrioridade, setSelectedPrioridade] = useState<PrioridadeAgendamento | 'TODOS'>('TODOS');
+  const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
   const [viewMode, setViewMode] = useState<'LISTA' | 'CALENDARIO'>('LISTA');
 
   // Sync state when initialFilters prop changes
@@ -106,9 +107,21 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
     }
   };
 
+  // Calculate sorted agendamentos by date closest first (or furthest first)
+  const sortedAgendamentos = [...agendamentos].sort((a, b) => {
+    const dateA = a.data_agendada || '';
+    const dateB = b.data_agendada || '';
+    if (dateA !== dateB) {
+      return sortOrder === 'ASC' ? dateA.localeCompare(dateB) : dateB.localeCompare(dateA);
+    }
+    const timeA = a.horario || '';
+    const timeB = b.horario || '';
+    return sortOrder === 'ASC' ? timeA.localeCompare(timeB) : timeB.localeCompare(timeA);
+  });
+
   const handleExportPDF = () => {
     PdfService.generateAgendaManutencoesPDF(
-      agendamentos,
+      sortedAgendamentos,
       `AGENDA DE MANUTENÇÕES (${selectedStatus} - ${selectedTipo})`
     );
   };
@@ -225,10 +238,10 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
 
       {/* Filters Bar */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-md space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
           
           {/* Search Box */}
-          <div className="md:col-span-2 relative">
+          <div className="lg:col-span-2 relative">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
             <input
               type="text"
@@ -279,6 +292,18 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
               <option value="ALTA">Alta</option>
               <option value="MEDIA">Média</option>
               <option value="BAIXA">Baixa</option>
+            </select>
+          </div>
+
+          {/* Sort Order */}
+          <div>
+            <select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as 'ASC' | 'DESC')}
+              className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 border-amber-500/30 text-xs font-semibold focus:outline-none focus:border-amber-500 cursor-pointer"
+            >
+              <option value="ASC">📅 Datas Mais Próximas</option>
+              <option value="DESC">📅 Datas Mais Distantes</option>
             </select>
           </div>
 
@@ -395,7 +420,7 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
 
         </div>
 
-      ) : agendamentos.length === 0 ? (
+      ) : sortedAgendamentos.length === 0 ? (
         
         /* EMPTY STATE */
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center space-y-3">
@@ -418,7 +443,7 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
 
         /* CARDS / LIST VIEW */
         <div className="space-y-3">
-          {agendamentos.map((a) => {
+          {sortedAgendamentos.map((a) => {
             const todayStr = new Date().toISOString().split('T')[0];
             const isOverdue = (a.status === 'AGENDADO' || a.status === 'EM_ANDAMENTO') && a.data_agendada < todayStr;
             const firearm = firearmsMap[a.firearm_id];

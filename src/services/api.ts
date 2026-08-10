@@ -878,6 +878,18 @@ export class ApiService {
         );
       }
 
+      // Sort by closest date first (data_agendada asc, horario asc)
+      list.sort((a, b) => {
+        const dateA = a.data_agendada || '';
+        const dateB = b.data_agendada || '';
+        if (dateA !== dateB) {
+          return dateA.localeCompare(dateB);
+        }
+        const timeA = a.horario || '';
+        const timeB = b.horario || '';
+        return timeA.localeCompare(timeB);
+      });
+
       return list;
     } catch (e) {
       console.error('[Firebase getAgendamentos error]', e);
