@@ -153,7 +153,6 @@ export const FirearmsPage: React.FC<FirearmsPageProps> = ({
               <option value="TODOS">Todas as Situações</option>
               <option value="DISPONIVEL">Disponível no Cofre</option>
               <option value="MANUTENCAO">Em Manutenção</option>
-              <option value="INSPECAO">Em Inspeção</option>
               <option value="BAIXADA">Baixadas / Inativas</option>
             </select>
           </div>

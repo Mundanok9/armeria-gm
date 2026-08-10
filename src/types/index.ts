@@ -26,7 +26,6 @@ export type TipoArmamento =
 export type SituacaoArmamento = 
   | 'DISPONIVEL' 
   | 'MANUTENCAO' 
-  | 'INSPECAO' 
   | 'BAIXADA';
 
 export type CondicaoArmamento = 

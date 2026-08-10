@@ -245,9 +245,7 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-sky-500 text-sm cursor-pointer"
               >
                 <option value="DISPONIVEL">Disponível</option>
-                <option value="CAUTELADA">Cautelada</option>
                 <option value="MANUTENCAO">Em Manutenção</option>
-                <option value="INSPECAO">Em Inspeção</option>
                 <option value="BAIXADA">Baixada</option>
               </select>
             </div>

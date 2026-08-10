@@ -14,14 +14,8 @@ export const StatusChip: React.FC<StatusChipProps> = ({ status, type = 'situacao
       case 'DISPONIVEL':
         styleClasses = 'bg-emerald-50 text-emerald-800 border-emerald-300 font-semibold';
         break;
-      case 'CAUTELADA':
-        styleClasses = 'bg-sky-50 text-sky-800 border-sky-300 font-semibold';
-        break;
       case 'MANUTENCAO':
         styleClasses = 'bg-amber-50 text-amber-800 border-amber-300 font-semibold';
-        break;
-      case 'INSPECAO':
-        styleClasses = 'bg-indigo-50 text-indigo-800 border-indigo-300 font-semibold';
         break;
       case 'BAIXADA':
         styleClasses = 'bg-rose-50 text-rose-800 border-rose-300 font-semibold';
