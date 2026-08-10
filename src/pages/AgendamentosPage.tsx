@@ -263,7 +263,6 @@ export const AgendamentosPage: React.FC<AgendamentosPageProps> = ({
             >
               <option value="TODOS">Todos os Status</option>
               <option value="AGENDADO">Agendado (Pendente)</option>
-              <option value="EM_ANDAMENTO">Em Andamento (Bancada)</option>
               <option value="CONCLUIDO">Concluído</option>
               <option value="CANCELADO">Cancelado</option>
             </select>

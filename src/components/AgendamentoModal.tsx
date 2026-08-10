@@ -276,7 +276,6 @@ export const AgendamentoModal: React.FC<AgendamentoModalProps> = ({
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-semibold focus:outline-none focus:border-sky-500 cursor-pointer"
               >
                 <option value="AGENDADO">AGENDADO (Pendente)</option>
-                <option value="EM_ANDAMENTO">EM ANDAMENTO (Na Bancada)</option>
                 <option value="CONCLUIDO">CONCLUÍDO (Realizado)</option>
                 <option value="CANCELADO">CANCELADO</option>
               </select>
