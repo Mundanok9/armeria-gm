@@ -3,6 +3,7 @@ import { Firearm } from '../types/index';
 import { ApiService } from '../services/api';
 import { PdfService } from '../services/pdf';
 import { StatusChip } from '../components/StatusChip';
+import { FirearmSilhouette } from '../components/FirearmSilhouette';
 import { 
   ArrowLeft, 
   Printer, 
@@ -156,10 +157,15 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
       </div>
 
       {/* Main Technical Sheet Card */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+      <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
         
+        {/* Background Watermark Silhouette */}
+        <div className="absolute right-4 top-4 pointer-events-none z-0 opacity-10 text-sky-400 w-72 h-44 flex items-center justify-center">
+          <FirearmSilhouette tipo={firearm.tipo} className="w-full h-full object-contain" />
+        </div>
+
         {/* Title Header */}
-        <div className="border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="relative z-10 border-b border-slate-800 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center space-x-2 mb-2">
               <span className="bg-sky-950 text-sky-300 font-bold text-xs px-2.5 py-1 rounded-md border border-sky-800/80">

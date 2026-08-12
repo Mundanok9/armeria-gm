@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Firearm, TipoArmamento, PecaReparo } from '../types/index';
 import { ApiService } from '../services/api';
 import { StatusChip } from '../components/StatusChip';
+import { FirearmSilhouette } from '../components/FirearmSilhouette';
 import { PdfService } from '../services/pdf';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -383,9 +384,14 @@ export const EmManutencaoPage: React.FC<EmManutencaoPageProps> = ({
                     return (
                       <div
                         key={firearm.id}
-                        className="bg-slate-900 border border-purple-900/40 hover:border-purple-600/60 rounded-2xl p-5 shadow-xl flex flex-col justify-between transition group space-y-4"
+                        className="relative overflow-hidden bg-slate-900 border border-purple-900/40 hover:border-purple-600/60 rounded-2xl p-5 shadow-xl flex flex-col justify-between transition group space-y-4"
                       >
-                        <div>
+                        {/* Background Watermark Silhouette */}
+                        <div className="absolute right-0 top-3 pointer-events-none z-0 opacity-[0.12] group-hover:opacity-[0.22] transition-opacity duration-300 text-sky-400 w-48 h-28 flex items-center justify-center p-2">
+                          <FirearmSilhouette tipo={firearm.tipo} className="w-full h-full object-contain" />
+                        </div>
+
+                        <div className="relative z-10">
                           {/* Header info */}
                           <div className="flex items-start justify-between gap-2 mb-3">
                             <div>

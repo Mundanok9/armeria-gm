@@ -1,6 +1,7 @@
 import React from 'react';
 import { Firearm } from '../types/index';
 import { StatusChip } from './StatusChip';
+import { FirearmSilhouette } from './FirearmSilhouette';
 import { Shield, Wrench, FileText, MapPin, AlertTriangle, Calendar, Clock, CalendarClock, Trash2 } from 'lucide-react';
 
 interface FirearmCardProps {
@@ -58,13 +59,18 @@ export const FirearmCard: React.FC<FirearmCardProps> = ({
   const scheduleInfo = getMaintenanceScheduleStatus();
 
   return (
-    <div className={`bg-slate-800/90 border rounded-2xl p-5 shadow-lg transition flex flex-col justify-between ${
+    <div className={`relative overflow-hidden group bg-slate-800/90 border rounded-2xl p-5 shadow-lg transition flex flex-col justify-between ${
       scheduleInfo?.isCritical 
         ? 'border-rose-500/80 ring-1 ring-rose-500/30 hover:border-rose-400' 
         : 'border-slate-700/80 hover:border-slate-600'
     }`}>
+      {/* Background Watermark Silhouette */}
+      <div className="absolute right-0 bottom-12 pointer-events-none z-0 opacity-[0.14] group-hover:opacity-[0.24] transition-opacity duration-300 text-sky-400 w-52 h-32 flex items-center justify-center p-2">
+        <FirearmSilhouette tipo={firearm.tipo} className="w-full h-full object-contain filter drop-shadow" />
+      </div>
+
       {/* Top row: Serial & Status */}
-      <div>
+      <div className="relative z-10">
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
             <div className="flex items-center space-x-2">
@@ -119,7 +125,7 @@ export const FirearmCard: React.FC<FirearmCardProps> = ({
       </div>
 
       {/* Action Buttons Grid */}
-      <div className="pt-3 border-t border-slate-700/60 flex items-center gap-1.5">
+      <div className="pt-3 border-t border-slate-700/60 flex items-center gap-1.5 relative z-10">
         <button
           onClick={() => onViewDetails(firearm)}
           className="flex-1 flex items-center justify-center space-x-1 bg-slate-700 hover:bg-slate-600 text-slate-100 text-xs font-bold py-2.5 px-2 rounded-xl transition cursor-pointer"
