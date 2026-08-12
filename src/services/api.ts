@@ -38,88 +38,8 @@ export const MOCK_TEST_USER: User = {
   created_at: new Date().toISOString(),
 };
 
-// Initial Seed Data for Firestore
-const INITIAL_FIREARMS: Firearm[] = [
-  {
-    id: 'arm-001',
-    n_serie: 'TS9-887412',
-    n_patrimonio: 'PAT-GM-2023-001',
-    tipo: 'PISTOLA',
-    marca: 'Taurus',
-    modelo: 'TS9',
-    calibre: '9mm Parabellum',
-    capacidade: 17,
-    acabamento: 'Oxidado Negro',
-    comprimento_cano: '4.0 polegadas',
-    situacao: 'DISPONIVEL',
-    condicao: 'EXCELENTE',
-    localizacao: 'Armeria Central - Armário A1 - Gaveta 01',
-    observacoes: 'Acompanha 3 carregadores de 17 tiros e maleta original.',
-    ultima_manutencao: '2026-07-20',
-    proxima_manutencao: '2026-08-19',
-    created_at: new Date('2024-01-01').toISOString(),
-    updated_at: new Date('2026-07-20').toISOString(),
-    historico_manutencao: [
-      {
-        id: 'man-001',
-        data: '2026-07-20',
-        tipo: 'PREVENTIVA',
-        descricao: 'Limpeza geral, lubrificação e inspeção do percursor e retém do ferrolho.',
-        responsavel: 'Inspetor Armeiro Carlos'
-      }
-    ]
-  },
-  {
-    id: 'arm-002',
-    n_serie: 'SMT9-109234',
-    n_patrimonio: 'PAT-GM-2022-045',
-    tipo: 'SUBMETRALHADORA',
-    marca: 'Taurus',
-    modelo: 'SMT9',
-    calibre: '9mm Parabellum',
-    capacidade: 30,
-    acabamento: 'Anodizado Preto',
-    comprimento_cano: '8.0 polegadas',
-    situacao: 'MANUTENCAO',
-    condicao: 'REGULAR',
-    localizacao: 'Bancada 02 - Armeria Central',
-    observacoes: 'Apresenta falha ocasional na ejeção do estojo no tiro automático.',
-    ultima_manutencao: '2026-06-15',
-    proxima_manutencao: '2026-08-01',
-    created_at: new Date('2024-01-01').toISOString(),
-    updated_at: new Date('2026-06-15').toISOString(),
-    historico_manutencao: [
-      {
-        id: 'man-002',
-        data: '2026-06-15',
-        tipo: 'CORRETIVA',
-        descricao: 'Substituição do extrator e mola do extrator após teste de estande.',
-        responsavel: 'Inspetor Armeiro Carlos'
-      }
-    ]
-  },
-  {
-    id: 'arm-003',
-    n_serie: 'ST12-554109',
-    n_patrimonio: 'PAT-GM-2021-012',
-    tipo: 'ESPINGARDA',
-    marca: 'CBC',
-    modelo: 'Pump Military 3.0 (ST12)',
-    calibre: '12 GA',
-    capacidade: 7,
-    acabamento: 'Coronha Retrátil e Cano Oxidado',
-    comprimento_cano: '19 polegadas',
-    situacao: 'DISPONIVEL',
-    condicao: 'BOM',
-    localizacao: 'Armeria Central - Armário B2',
-    observacoes: 'Destinado ao patrulhamento tático e controle de distúrbios.',
-    ultima_manutencao: '2026-05-10',
-    proxima_manutencao: '2026-08-10',
-    created_at: new Date('2024-01-01').toISOString(),
-    updated_at: new Date('2026-05-10').toISOString(),
-    historico_manutencao: []
-  }
-];
+// Initial Seed Data for Firestore (Empty for production initialization)
+const INITIAL_FIREARMS: Firearm[] = [];
 
 const INITIAL_USERS: User[] = [
   MOCK_TEST_USER,
@@ -161,42 +81,13 @@ const INITIAL_USERS: User[] = [
   }
 ];
 
-const INITIAL_PECAS: PecaReparo[] = [
-  {
-    id: 'peca-001',
-    firearm_id: 'arm-002',
-    firearm_serie: 'SMT9-109234',
-    firearm_modelo: 'Taurus SMT9',
-    manutencao_id: 'man-002',
-    nome_peca: 'Extrator e Mola do Extrator',
-    quantidade: 1,
-    descricao: 'Peça com desgaste prematuro causando falha de ejeção.',
-    status: 'PENDENTE',
-    data_solicitacao: '2026-08-01',
-    responsavel: 'Inspetor Armeiro Carlos'
-  }
-];
+const INITIAL_PECAS: PecaReparo[] = [];
 
-const INITIAL_AGENDAMENTOS: AgendamentoManutencao[] = [
-  {
-    id: 'agd-001',
-    firearm_id: 'arm-003',
-    firearm_serie: 'ST12-554109',
-    firearm_modelo: 'CBC Pump Military 3.0',
-    firearm_tipo: 'ESPINGARDA',
-    tipo: 'PREVENTIVA',
-    data_agendada: '2026-08-10',
-    motivo_observacao: 'Revisão semestral de mecanismo de extração e mola do depósito.',
-    prioridade: 'MEDIA',
-    status: 'AGENDADO',
-    responsavel: 'Inspetor Armeiro Carlos',
-    created_at: new Date('2026-08-01').toISOString(),
-    updated_at: new Date('2026-08-01').toISOString()
-  }
-];
+const INITIAL_AGENDAMENTOS: AgendamentoManutencao[] = [];
 
 // Helper to seed Firebase collection if empty
 async function seedCollectionIfEmpty<T extends { id: string }>(colName: string, initialData: T[]): Promise<void> {
+  if (!initialData || initialData.length === 0) return;
   try {
     const colRef = collection(db, colName);
     const snap = await getDocs(colRef);
@@ -214,12 +105,17 @@ let isSeeded = false;
 async function ensureDbSeeded() {
   if (isSeeded) return;
   isSeeded = true;
-  await Promise.all([
-    seedCollectionIfEmpty('firearms', INITIAL_FIREARMS),
-    seedCollectionIfEmpty('users', INITIAL_USERS),
-    seedCollectionIfEmpty('pecas', INITIAL_PECAS),
-    seedCollectionIfEmpty('agendamentos', INITIAL_AGENDAMENTOS),
-  ]);
+  await seedCollectionIfEmpty('users', INITIAL_USERS);
+
+  // One-time automatic cleanup of pre-existing mock seed data
+  if (!localStorage.getItem('armeria_gm_reset_v2')) {
+    localStorage.setItem('armeria_gm_reset_v2', 'true');
+    try {
+      await ApiService.resetSystemData();
+    } catch (err) {
+      console.warn('[Auto reset error]', err);
+    }
+  }
 }
 
 export class ApiService {
@@ -333,7 +229,7 @@ export class ApiService {
       return list;
     } catch (err) {
       console.error('[Firebase getFirearms error]', err);
-      return INITIAL_FIREARMS;
+      return [];
     }
   }
 
@@ -770,7 +666,7 @@ export class ApiService {
       return list;
     } catch (e) {
       console.error('[Firebase getPecas error]', e);
-      return INITIAL_PECAS;
+      return [];
     }
   }
 
@@ -893,7 +789,7 @@ export class ApiService {
       return list;
     } catch (e) {
       console.error('[Firebase getAgendamentos error]', e);
-      return INITIAL_AGENDAMENTOS;
+      return [];
     }
   }
 
@@ -1200,5 +1096,22 @@ export class ApiService {
       }
     }
     return { success: true, message: 'Restauração no Firebase Firestore concluída com sucesso!' };
+  }
+
+  public static async resetSystemData(): Promise<{ success: boolean; message: string }> {
+    try {
+      const collectionsToWipe = ['firearms', 'pecas', 'agendamentos', 'logs'];
+      for (const colName of collectionsToWipe) {
+        const snap = await getDocs(collection(db, colName));
+        for (const docItem of snap.docs) {
+          await deleteDoc(doc(db, colName, docItem.id));
+        }
+      }
+      await this.addLog('SISTEMA_ZERADO', 'Limpeza completa realizada: todos os armamentos, agendamentos, manutenções, peças e registros foram removidos para início oficial de uso.');
+      return { success: true, message: 'Sistema zerado com sucesso! Todos os registros, armamentos, agendamentos e peças foram removidos.' };
+    } catch (e: any) {
+      console.error('[Reset System Data Error]', e);
+      throw new Error(`Erro ao zerar sistema: ${e.message || e}`);
+    }
   }
 }

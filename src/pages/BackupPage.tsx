@@ -52,6 +52,23 @@ export const BackupPage: React.FC = () => {
     reader.readAsText(file);
   };
 
+  const handleResetSystem = async () => {
+    if (!confirm('ATENÇÃO EXTREMA: Esta ação irá excluir DEFINITIVAMENTE todos os armamentos, manutenções, peças solicitadas, agendamentos e registros de auditoria do sistema!\n\nEsta operação é irreversível e prepara o sistema para início com cadastros zerados.\n\nDeseja realmente prosseguir?')) {
+      return;
+    }
+
+    setLoading(true);
+    setMessage(null);
+    try {
+      const res = await ApiService.resetSystemData();
+      setMessage({ type: 'success', text: res.message });
+    } catch (err: any) {
+      setMessage({ type: 'error', text: err.message || 'Erro ao zerar base de dados.' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       
@@ -59,10 +76,10 @@ export const BackupPage: React.FC = () => {
       <div className="bg-slate-900 p-6 border border-slate-800 rounded-2xl shadow-lg">
         <h2 className="text-xl font-bold text-white tracking-tight flex items-center space-x-2">
           <Database className="w-6 h-6 text-sky-400" />
-          <span>Gestão de Backup & Restauração da Armeria</span>
+          <span>Gestão de Backup & Inicialização do Sistema</span>
         </h2>
         <p className="text-xs text-slate-400 font-medium mt-1">
-          Exporte regularmente cópias de segurança do banco de dados para o Google Drive ou armazenamento local
+          Exporte backups do banco de dados ou zere os cadastros para início oficial da operação da armeria
         </p>
       </div>
 
@@ -78,7 +95,7 @@ export const BackupPage: React.FC = () => {
       )}
 
       {/* Backup Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Export Card */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg space-y-4 flex flex-col justify-between">
@@ -86,9 +103,9 @@ export const BackupPage: React.FC = () => {
             <div className="w-12 h-12 bg-sky-500/10 rounded-xl flex items-center justify-center text-sky-400 mb-4">
               <Download className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white">Exportar Backup Completo</h3>
+            <h3 className="text-base font-bold text-white">Exportar Backup</h3>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-              Gera uma cópia criptografada e estruturada de todo o banco de dados (Armamentos, Cautelas, Manutenções, Usuários e Logs de Auditoria).
+              Gera uma cópia de segurança estruturada do banco de dados em formato `.json`.
             </p>
           </div>
 
@@ -98,7 +115,7 @@ export const BackupPage: React.FC = () => {
             className="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg transition cursor-pointer disabled:opacity-50 flex items-center justify-center space-x-2"
           >
             <Download className="w-4 h-4" />
-            <span>{loading ? 'Gerando...' : 'Baixar Arquivo JSON de Backup'}</span>
+            <span>{loading ? 'Gerando...' : 'Baixar Backup'}</span>
           </button>
         </div>
 
@@ -108,15 +125,15 @@ export const BackupPage: React.FC = () => {
             <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-400 mb-4">
               <Upload className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white">Restaurar Base de Dados</h3>
+            <h3 className="text-base font-bold text-white">Restaurar Backup</h3>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-              Selecione um arquivo de backup `.json` prévio do seu computador ou baixado do Google Drive para restaurar o acervo.
+              Selecione um arquivo de backup `.json` prévio do seu dispositivo para restaurar os dados.
             </p>
           </div>
 
           <label className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg transition cursor-pointer flex items-center justify-center space-x-2 text-center">
             <Upload className="w-4 h-4" />
-            <span>{loading ? 'Restaurando...' : 'Carregar Arquivo JSON e Restaurar'}</span>
+            <span>{loading ? 'Restaurando...' : 'Carregar Backup'}</span>
             <input
               type="file"
               accept=".json"
@@ -125,6 +142,28 @@ export const BackupPage: React.FC = () => {
               className="hidden"
             />
           </label>
+        </div>
+
+        {/* Reset System Card */}
+        <div className="bg-slate-900 border border-rose-900/40 rounded-2xl p-6 shadow-lg space-y-4 flex flex-col justify-between">
+          <div>
+            <div className="w-12 h-12 bg-rose-500/10 rounded-xl flex items-center justify-center text-rose-400 mb-4">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold text-white">Zerar Cadastros</h3>
+            <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+              Remove todos os armamentos, agendamentos, manutenções, peças e registros de auditoria do sistema.
+            </p>
+          </div>
+
+          <button
+            onClick={handleResetSystem}
+            disabled={loading}
+            className="w-full bg-rose-700 hover:bg-rose-600 text-white font-bold py-3 px-4 rounded-xl text-xs shadow-lg transition cursor-pointer disabled:opacity-50 flex items-center justify-center space-x-2"
+          >
+            <ShieldAlert className="w-4 h-4" />
+            <span>{loading ? 'Zerando...' : 'Zerar Base de Dados'}</span>
+          </button>
         </div>
 
       </div>
