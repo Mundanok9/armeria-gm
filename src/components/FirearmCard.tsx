@@ -65,8 +65,8 @@ export const FirearmCard: React.FC<FirearmCardProps> = ({
         : 'border-slate-700/80 hover:border-slate-600'
     }`}>
       {/* Background Watermark Silhouette */}
-      <div className="absolute right-0 bottom-12 pointer-events-none z-0 opacity-[0.14] group-hover:opacity-[0.24] transition-opacity duration-300 text-sky-400 w-52 h-32 flex items-center justify-center p-2">
-        <FirearmSilhouette tipo={firearm.tipo} className="w-full h-full object-contain filter drop-shadow" />
+      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center p-4 opacity-[0.13] group-hover:opacity-[0.22] transition-opacity duration-300 text-sky-400">
+        <FirearmSilhouette tipo={firearm.tipo} className="w-[85%] h-[75%] object-contain filter drop-shadow" />
       </div>
 
       {/* Top row: Serial & Status */}

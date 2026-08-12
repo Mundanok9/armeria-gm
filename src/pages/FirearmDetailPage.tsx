@@ -160,8 +160,8 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
       <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
         
         {/* Background Watermark Silhouette */}
-        <div className="absolute right-4 top-4 pointer-events-none z-0 opacity-10 text-sky-400 w-72 h-44 flex items-center justify-center">
-          <FirearmSilhouette tipo={firearm.tipo} className="w-full h-full object-contain" />
+        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center p-6 opacity-[0.09] text-sky-400">
+          <FirearmSilhouette tipo={firearm.tipo} className="w-[80%] h-[80%] object-contain" />
         </div>
 
         {/* Title Header */}

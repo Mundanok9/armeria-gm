@@ -387,8 +387,8 @@ export const EmManutencaoPage: React.FC<EmManutencaoPageProps> = ({
                         className="relative overflow-hidden bg-slate-900 border border-purple-900/40 hover:border-purple-600/60 rounded-2xl p-5 shadow-xl flex flex-col justify-between transition group space-y-4"
                       >
                         {/* Background Watermark Silhouette */}
-                        <div className="absolute right-0 top-3 pointer-events-none z-0 opacity-[0.12] group-hover:opacity-[0.22] transition-opacity duration-300 text-sky-400 w-48 h-28 flex items-center justify-center p-2">
-                          <FirearmSilhouette tipo={firearm.tipo} className="w-full h-full object-contain" />
+                        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center p-4 opacity-[0.11] group-hover:opacity-[0.20] transition-opacity duration-300 text-sky-400">
+                          <FirearmSilhouette tipo={firearm.tipo} className="w-[85%] h-[75%] object-contain" />
                         </div>
 
                         <div className="relative z-10">
