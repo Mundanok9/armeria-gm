@@ -45,7 +45,6 @@ export class PdfService {
       head: [['ESPECIFICAÇÃO', 'DETALHES']],
       body: [
         ['Número de Série', firearm.n_serie],
-        ['Número de Patrimônio', firearm.n_patrimonio],
         ['Tipo de Armamento', firearm.tipo],
         ['Marca / Fabricante', firearm.marca],
         ['Modelo', firearm.modelo],
@@ -143,10 +142,9 @@ export class PdfService {
       theme: 'grid',
       headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255], fontStyle: 'bold' },
       styles: { fontSize: 8, cellPadding: 2.5 },
-      head: [['N° Série', 'Patrimônio', 'Tipo', 'Marca', 'Modelo', 'Calibre', 'Situação', 'Condição', 'Última Manut.', 'Próxima Manut. (30d)']],
+      head: [['N° Série', 'Tipo', 'Marca', 'Modelo', 'Calibre', 'Situação', 'Condição', 'Última Manut.', 'Próxima Manut. (30d)']],
       body: firearms.map(f => [
         f.n_serie,
-        f.n_patrimonio,
         f.tipo,
         f.marca,
         f.modelo,

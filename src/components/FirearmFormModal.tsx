@@ -19,7 +19,6 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<Partial<Firearm>>({
     n_serie: '',
-    n_patrimonio: '',
     tipo: 'PISTOLA',
     marca: 'Taurus',
     modelo: 'TS9',
@@ -42,7 +41,6 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
     } else {
       setFormData({
         n_serie: '',
-        n_patrimonio: '',
         tipo: 'PISTOLA',
         marca: 'Taurus',
         modelo: 'TS9',
@@ -65,7 +63,7 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
     e.preventDefault();
     setError('');
 
-    if (!formData.n_serie || !formData.n_patrimonio || !formData.marca || !formData.modelo) {
+    if (!formData.n_serie || !formData.marca || !formData.modelo) {
       setError('Por favor, preencha todos os campos obrigatórios (*).');
       return;
     }
@@ -121,21 +119,6 @@ export const FirearmFormModal: React.FC<FirearmFormModalProps> = ({
                 value={formData.n_serie || ''}
                 onChange={(e) => setFormData({ ...formData, n_serie: e.target.value })}
                 placeholder="Ex: TS9-887412"
-                className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm"
-              />
-            </div>
-
-            {/* N° de Patrimônio */}
-            <div>
-              <label className="block text-xs font-bold text-slate-300 mb-1 uppercase tracking-wider">
-                N° de Patrimônio *
-              </label>
-              <input
-                type="text"
-                required
-                value={formData.n_patrimonio || ''}
-                onChange={(e) => setFormData({ ...formData, n_patrimonio: e.target.value })}
-                placeholder="Ex: PAT-GM-2024-001"
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-mono placeholder-slate-500 focus:outline-none focus:border-sky-500 text-sm"
               />
             </div>

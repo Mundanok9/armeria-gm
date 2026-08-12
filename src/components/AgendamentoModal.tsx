@@ -194,7 +194,7 @@ export const AgendamentoModal: React.FC<AgendamentoModalProps> = ({
                 >
                   {firearms.map((f) => (
                     <option key={f.id} value={f.id}>
-                      [{f.tipo}] {f.marca} {f.modelo} — Série: {f.n_serie} (Pat: {f.n_patrimonio})
+                      [{f.tipo}] {f.marca} {f.modelo} — Série: {f.n_serie}
                     </option>
                   ))}
                 </select>

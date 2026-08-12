@@ -71,7 +71,6 @@ export const FirearmCard: React.FC<FirearmCardProps> = ({
               <span className="text-xs font-bold text-sky-400 tracking-wider bg-sky-950/60 border border-sky-800/80 px-2 py-0.5 rounded">
                 {firearm.tipo}
               </span>
-              <span className="text-xs text-slate-400 font-mono">Pat: {firearm.n_patrimonio}</span>
             </div>
             <h3 className="text-lg font-bold text-white mt-1 tracking-tight flex items-center space-x-2">
               <span>{firearm.marca} {firearm.modelo}</span>

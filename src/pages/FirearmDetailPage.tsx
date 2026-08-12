@@ -165,7 +165,6 @@ export const FirearmDetailPage: React.FC<FirearmDetailPageProps> = ({
               <span className="bg-sky-950 text-sky-300 font-bold text-xs px-2.5 py-1 rounded-md border border-sky-800/80">
                 {firearm.tipo}
               </span>
-              <span className="text-xs font-mono text-slate-400">Patrimônio: {firearm.n_patrimonio}</span>
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight">
               {firearm.marca} {firearm.modelo}

@@ -66,7 +66,7 @@ export interface RegistroManutencao {
 export interface Firearm {
   id: string;
   n_serie: string;
-  n_patrimonio: string;
+  n_patrimonio?: string;
   tipo: TipoArmamento;
   marca: string;
   modelo: string;

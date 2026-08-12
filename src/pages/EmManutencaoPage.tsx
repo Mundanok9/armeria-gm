@@ -101,7 +101,7 @@ export const EmManutencaoPage: React.FC<EmManutencaoPageProps> = ({
     const matchesSearch =
       !term ||
       f.n_serie.toLowerCase().includes(term) ||
-      f.n_patrimonio.toLowerCase().includes(term) ||
+      (f.n_patrimonio && f.n_patrimonio.toLowerCase().includes(term)) ||
       f.marca.toLowerCase().includes(term) ||
       f.modelo.toLowerCase().includes(term) ||
       f.calibre.toLowerCase().includes(term);
@@ -409,10 +409,6 @@ export const EmManutencaoPage: React.FC<EmManutencaoPageProps> = ({
                             <div className="flex justify-between">
                               <span className="text-slate-500">Nº de Série:</span>
                               <span className="font-mono font-bold text-sky-300">{firearm.n_serie}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-slate-500">Patrimônio:</span>
-                              <span className="font-mono text-slate-300">{firearm.n_patrimonio}</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-slate-500">Calibre:</span>

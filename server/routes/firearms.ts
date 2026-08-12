@@ -16,7 +16,7 @@ router.get('/', (req: AuthenticatedRequest, res: Response) => {
     const term = search.trim().toLowerCase();
     firearms = firearms.filter(f =>
       f.n_serie.toLowerCase().includes(term) ||
-      f.n_patrimonio.toLowerCase().includes(term) ||
+      (f.n_patrimonio && f.n_patrimonio.toLowerCase().includes(term)) ||
       f.modelo.toLowerCase().includes(term) ||
       f.marca.toLowerCase().includes(term) ||
       f.calibre.toLowerCase().includes(term)
@@ -166,9 +166,9 @@ router.post('/', requireRole(['ADMIN', 'ARMEIRO']), (req: AuthenticatedRequest, 
     observacoes
   } = req.body;
 
-  if (!n_serie || !n_patrimonio || !tipo || !marca || !modelo || !calibre) {
+  if (!n_serie || !tipo || !marca || !modelo || !calibre) {
     return res.status(400).json({
-      error: 'Campos obrigatórios ausentes: N° Série, N° Patrimônio, Tipo, Marca, Modelo, Calibre.'
+      error: 'Campos obrigatórios ausentes: N° Série, Tipo, Marca, Modelo, Calibre.'
     });
   }
 
@@ -176,10 +176,6 @@ router.post('/', requireRole(['ADMIN', 'ARMEIRO']), (req: AuthenticatedRequest, 
 
   if (firearms.some(f => f.n_serie.trim().toLowerCase() === n_serie.trim().toLowerCase())) {
     return res.status(400).json({ error: `Já existe um armamento cadastrado com o N° de Série "${n_serie}".` });
-  }
-
-  if (firearms.some(f => f.n_patrimonio.trim().toLowerCase() === n_patrimonio.trim().toLowerCase())) {
-    return res.status(400).json({ error: `Já existe um armamento cadastrado com o N° de Patrimônio "${n_patrimonio}".` });
   }
 
   const today = new Date();
@@ -192,7 +188,7 @@ router.post('/', requireRole(['ADMIN', 'ARMEIRO']), (req: AuthenticatedRequest, 
   const newFirearm: Firearm = {
     id: `arm-${Date.now()}`,
     n_serie: n_serie.trim().toUpperCase(),
-    n_patrimonio: n_patrimonio.trim().toUpperCase(),
+    n_patrimonio: n_patrimonio ? n_patrimonio.trim().toUpperCase() : '',
     tipo,
     marca: marca.trim(),
     modelo: modelo.trim(),
